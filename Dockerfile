@@ -1,5 +1,5 @@
 FROM nginx:latest
-# Copy the website files into the container
+# Copy the websitee files into the container
 COPY index.html /usr/share/nginx/html/
 COPY css /usr/share/nginx/html/css
 COPY fonts /usr/share/nginx/html/fonts
