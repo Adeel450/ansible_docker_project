@@ -5,8 +5,9 @@
   tasks:
     - name: Fetch files from the remote server
       synchronize:
-        src: /root/.jenkins/workspace/Myjob_github_ansible_docker/
-        dest: /home/aadmin/myproject/projects
+        src: /var/lib/jenkins/workspace/Myjob_github_ansible_docker/
+        dest: /root/ansible-project
+
         mode: pull
 - hosts: ansible
   gather_facts: false
@@ -15,7 +16,7 @@
   - name: Stopping the container!!!!!
     docker_container:
       name: nginx_container
-      image: nginx_image:v1
+      image: nginx:latest
       state: stopped
   - name: Removing the container 
     docker_container:
@@ -24,21 +25,21 @@
       state: absent
   - name: "Its deleting the old inmage!!!"
     docker_image:
-      name: nginx_image:v1
-      state: absent
+           name: nginx:latest
+           state: absent
 
   - name: Building the my docker images
     docker_image:
       source: build
-      name: nginx_image:v1
+      name: nginx:latest
       build:
-        path: /home/aadmin/myproject/projects/
+        path: /root/ansible-project
       state: present
   
   - name: Creating the container and start
     docker_container:
       name: nginx_container
-      image: nginx_image:v1
+      image: nginx:latest
       ports:
         - "8183:80"
       state: started
