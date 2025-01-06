@@ -1,17 +1,17 @@
 ---
 - hosts: docker
   gather_facts: false
-  remote_user: root
+  remote_user: adeel
   tasks:
     - name: Fetch files from the remote server
       synchronize:
         src: /var/lib/jenkins/workspace/Myjob_github_ansible_docker/
-        dest: /root/ansible-project
+        dest: /home/adeel/ansible_docker_project
 
         mode: pull
 - hosts: ansible
   gather_facts: false
-  remote_user: root
+  remote_user: adeel
   tasks:
   - name: Stopping the container!!!!!
     docker_container:
@@ -33,7 +33,7 @@
       source: build
       name: nginx:latest
       build:
-        path: /root/ansible-project
+        path: /home/adeel/ansible_docker_project/
       state: present
   
   - name: Creating the container and start
